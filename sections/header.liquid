@@ -1,8 +1,8 @@
-<header class="store-header">
-  <div class="store-header__container">
+<header class="store-header ">
+  <div class="store-header__container container">
     <a href="{{ routes.root_url }}" class="store-header__logo-link">
       {% if shop.brand.logo %}
-        {{ shop.brand.logo | image_url: width: 40 | image_tag: class: 'store-header__logo', alt: shop.name }}
+        {{ shop.brand.logo | image_url: width: 35 | image_tag: class: 'store-header__logo', alt: shop.name }}
       {% else %}
         <span class="store-header__store-name">
           {{ shop.name }}
@@ -51,9 +51,8 @@
   }
 
   .store-header__container {
-    max-width: 900px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
