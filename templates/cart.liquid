@@ -1,0 +1,205 @@
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+  }
+
+  .cart-container {
+    max-width: 900px;
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+  }
+
+  .cart-items,
+  .cart-summary {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .cart-title {
+    font-size: 2rem;
+    margin-bottom: 25px;
+  }
+
+  .cart-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid #e5e5e5;
+  }
+
+  .cart-item:last-child {
+    border-bottom: none;
+  }
+
+  .cart-item img {
+    width: 120px;
+    border-radius: 10px;
+  }
+
+  .item-details {
+    flex: 1;
+  }
+
+  .item-title {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+
+  .item-price {
+    color: #27ae60;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .quantity-input {
+    width: 70px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+
+  .remove-btn {
+    background: transparent;
+    border: none;
+    color: #d63031;
+    cursor: pointer;
+    font-size: 0.65rem;
+    margin-top: 30px;
+  }
+
+  .summary-title {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+  }
+
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    font-size: 0.8rem;
+  }
+
+  .summary-total {
+    font-size: 1.3rem;
+    font-weight: bold;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .checkout-btn {
+    width: 100%;
+    padding: 16px;
+    margin-top: 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #000;
+    color: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .checkout-btn:hover {
+    background-color: #333;
+  }
+
+  @media (max-width: 900px) {
+    .cart-container {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .cart-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .cart-item img {
+      width: 100%;
+      max-width: 250px;
+    }
+  }
+</style>
+
+<form action="/cart" method="post" novalidate>
+  <div class="cart-container">
+    <!-- Cart Items -->
+    <div class="cart-items">
+      <h1 class="cart-title">Your Cart</h1>
+
+      {% if cart.item_count == 0 %}
+        <p>Your cart is currently empty</p>
+      {% else %}
+        {% for item in cart.items %}
+          <div class="cart-item">
+            <img
+              src="{{ item.image | image_url: width: 300 }}"
+              alt="{{ item.product.title }}"
+            >
+
+            <div class="item-details">
+              <h2 class="item-title">
+                {{ item.product.title }}
+              </h2>
+
+              <div class="item-price">
+                {{ item.final_price | money }}
+              </div>
+
+              <div class="item-title">
+                {{ item.quantity }}
+              </div>
+
+              <br>
+
+              <a
+                class="remove-btn"
+                href="{{ item.url_to_remove }}"
+              >
+                Remove
+              </a>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+
+    <!-- Cart Summary -->
+    <div class="cart-summary">
+      <h2 class="summary-title">Order Summary</h2>
+
+      <div class="summary-row">
+        <span>Subtotal</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+
+      <div class="summary-row">
+        <span>Shipping</span>
+        <span>Calculated at checkout</span>
+      </div>
+
+      <div class="summary-row summary-total">
+        <span>Total</span>
+        <span>{{ cart.total_price | money }}</span>
+      </div>
+
+      <a href="/checkout" class="checkout-btn"> Proceed to Checkout </a>
+    </div>
+  </div>
+</form>

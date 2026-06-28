@@ -1,0 +1,162 @@
+<header class="store-header">
+  <div class="store-header__container">
+    <a href="{{ routes.root_url }}" class="store-header__logo-link">
+      {% if section.settings.logo != blank %}
+        {{ section.settings.logo | image_url: width: 400 | image_tag: class: 'store-header__logo', alt: shop.name }}
+      {% else %}
+        <span class="store-header__store-name">
+          {{ shop.name }}
+        </span>
+      {% endif %}
+    </a>
+
+    <nav class="store-header__nav">
+      {% for link in linklists['main-menu'].links %}
+        <a class="store-header__nav-link" href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="store-header__icons">
+      <!-- Account -->
+      <a href="{{ routes.account_url }}" class="store-header__icon-link" aria-label="Account">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <path d="M20 21a8 8 0 0 0-16 0" stroke="currentColor" stroke-width="2"/>
+          <circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+        </svg>
+      </a>
+
+      <!-- Cart -->
+      <a href="{{ routes.cart_url }}" class="store-header__icon-link" aria-label="Cart">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <path d="M6 6h15l-2 9H7L6 6Z" stroke="currentColor" stroke-width="2"/>
+          <path d="M6 6L5 3H2" stroke="currentColor" stroke-width="2"/>
+          <circle cx="9" cy="20" r="1" fill="currentColor"/>
+          <circle cx="18" cy="20" r="1" fill="currentColor"/>
+        </svg>
+
+        {% if cart.item_count > 0 %}
+          <span class="store-header__cart-count">
+            {{ cart.item_count }}
+          </span>
+        {% endif %}
+      </a>
+    </div>
+  </div>
+</header>
+
+{% stylesheet %}
+  .store-header {
+    border-bottom: 1px solid #e5e5e5;
+    background: #ffffff;
+  }
+
+  .store-header__container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .store-header__logo {
+    max-width: 180px;
+    height: auto;
+    display: block;
+  }
+
+  .store-header__store-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #111;
+  }
+
+  .store-header__nav {
+    display: flex;
+    gap: 24px;
+  }
+
+  .store-header__nav-link {
+    text-decoration: none;
+    color: #222;
+    font-size: 14px;
+  }
+
+  .store-header__icons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .store-header__icon-link {
+    text-decoration: none;
+    font-size: 18px;
+    position: relative;
+    color: #222;
+  }
+
+  .store-header__cart-count {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    background: black;
+    color: white;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .store-header__icons {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .store-header__icon-link {
+    position: relative;
+    color: #222;
+    display: flex;
+    align-items: center;
+  }
+
+  .store-header__icon-link:hover {
+    color: #000;
+  }
+
+  .icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .store-header__cart-count {
+    position: absolute;
+    top: -6px;
+    right: -8px;
+    background: black;
+    color: white;
+    font-size: 10px;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo"
+    }
+  ]
+}
+{% endschema %}
