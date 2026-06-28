@@ -7,19 +7,20 @@
   }
 
   .cart-container {
-    max-width: 900px;
     margin: 40px auto;
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 30px;
   }
 
-  .cart-items,
+  {% comment %} .cart-items,
   .cart-summary {
     background: #fff;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  } {% endcomment %}
+
+  .cart-summary {
+    background: #000;
+    padding: 16px;
   }
 
   .cart-title {
@@ -41,7 +42,6 @@
 
   .cart-item img {
     width: 120px;
-    border-radius: 10px;
   }
 
   .item-details {
@@ -54,7 +54,6 @@
   }
 
   .item-price {
-    color: #27ae60;
     font-weight: bold;
     margin-bottom: 10px;
   }
@@ -63,7 +62,6 @@
     width: 70px;
     padding: 8px;
     border: 1px solid #ccc;
-    border-radius: 6px;
     margin-bottom: 10px;
   }
 
@@ -79,6 +77,7 @@
   .summary-title {
     font-size: 1.5rem;
     margin-bottom: 25px;
+    color: #fff;
   }
 
   .summary-row {
@@ -101,21 +100,28 @@
     text-decoration: none;
   }
 
+  span {
+  color: #fff;
+  }
+
   .checkout-btn {
-    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
     padding: 16px;
-    margin-top: 25px;
+    margin-top: 50px;
     border: none;
     border-radius: 8px;
-    background-color: #000;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease;
   }
 
   .checkout-btn:hover {
-    background-color: #333;
+    background-color: #888;
   }
 
   @media (max-width: 900px) {
@@ -138,7 +144,7 @@
 </style>
 
 <form action="/cart" method="post" novalidate>
-  <div class="cart-container">
+  <div class="cart-container container">
     <!-- Cart Items -->
     <div class="cart-items">
       <h1 class="cart-title">Your Cart</h1>
@@ -199,7 +205,9 @@
         <span>{{ cart.total_price | money }}</span>
       </div>
 
-      <a href="/checkout" class="checkout-btn"> Proceed to Checkout </a>
+      <div class="checkout-btn">
+        <a href="/checkout"> Proceed to Checkout </a>
+      </div>
     </div>
   </div>
 </form>
