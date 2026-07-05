@@ -1,12 +1,24 @@
 {
-    "type" : "header",
-    "name" : "Header Group",
-    "sections": {
-        "header" : {
-            "type" : "header"
-        }
+  "type": "header",
+  "name": "Header Group",
+  "sections": {
+    "header": {
+      "type": "header",
+      "settings": {}
     },
-    "order" : [
-        "header"
-    ],
+    "announcement_bar_fmxLEc": {
+      "type": "announcement-bar",
+      "custom_css": [],
+      "name": "Announcement Bar",
+      "settings": {
+        "text": "Welcome to our store!",
+        "background_color": "#000000",
+        "text_color": "#ffffff"
+      }
+    }
+  },
+  "order": [
+    "announcement_bar_fmxLEc",
+    "header"
+  ]
 }

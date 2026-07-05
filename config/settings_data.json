@@ -1,3 +1,7 @@
 {
-    "current" : {}
+  "current": {
+    "heading_font": "outfit_n6",
+    "body_font": "outfit_n4",
+    "content_for_index": []
+  }
 }

@@ -1,42 +1,4 @@
-<section class="featured-collection">
-  <div class="page-width">
-    {% if section.settings.heading != blank %}
-      <h2 class="featured-collection__title">
-        {{ section.settings.heading }}
-      </h2>
-    {% endif %}
-
-    {% assign collection = collections[section.settings.collection] %}
-
-    {% if collection != blank and collection.products_count > 0 %}
-      <div class="featured-collection__grid">
-        {% for product in collection.products limit: section.settings.products_limit %}
-          <div class="featured-collection__item">
-            <a href="{{ product.url }}">
-              {% if product.featured_image %}
-                <img
-                  src="{{ product.featured_image | image_url: width: 600 }}"
-                  alt="{{ product.title }}"
-                  loading="lazy"
-                >
-              {% endif %}
-              <h3>{{ product.title }}</h3>
-              <p>{{ product.price | money }}</p>
-            </a>
-          </div>
-        {% endfor %}
-      </div>
-    {% else %}
-      <p>No products found in this collection.</p>
-    {% endif %}
-  </div>
-</section>
-
 {% stylesheet %}
-  .featured-collection {
-    padding: 60px 0;
-  }
-
   .featured-collection__title {
     text-align: center;
     margin-bottom: 30px;
@@ -51,9 +13,6 @@
 
   .featured-collection__item {
     text-align: center;
-    border: 1px solid #eee;
-    padding: 15px;
-    border-radius: 8px;
   }
 
   .featured-collection__item img {
@@ -74,6 +33,44 @@
     }
   }
 {% endstylesheet %}
+
+<section class="featured-collection container">
+  <div class="page-width">
+    {% if section.settings.heading != blank %}
+      <h2 class="featured-collection__title">
+        {{ section.settings.heading }}
+      </h2>
+    {% endif %}
+
+    {% assign collection = collections[section.settings.collection] %}
+
+    {% if collection != blank and collection.products_count > 0 %}
+      <div class="featured-collection__grid">
+        {% for product in collection.products limit: section.settings.products_limit %}
+          <div class="collection-card">
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                <img
+                  src="{{ product.featured_image | image_url: width: 600 }}"
+                  alt="{{ product.title }}"
+                  loading="lazy"
+                >
+              {% endif %}
+              <h2 class="collection-card-title">
+                {{ product.title }}
+              </h2>
+              <div class="collection-card-price">
+                {{ product.price | money }}
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>No products found in this collection.</p>
+    {% endif %}
+  </div>
+</section>
 
 {% schema %}
 {
@@ -103,7 +100,7 @@
   "presets": [
     {
       "name": "Featured Collection",
-      "category": "Genral"
+      "category": "General"
     }
   ]
 }

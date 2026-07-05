@@ -1,15 +1,15 @@
 * {
   box-sizing: border-box;
+  text-decoration: none;
 }
 
 body {
   margin: 0;
   background-color: #ffffff;
-  font-family: "Outfit", sans-serif;
-  /* font-family: var(--font-body--family); */
+  font-family: var(--font-body--family);
 }
 
-/* h1,
+h1,
 h2,
 h3,
 h4,
@@ -17,7 +17,7 @@ h5,
 h6 {
   font-family: var(--font-heading--family);
   margin: 0;
-} */
+}
 
 .container {
   width: 100%;
@@ -30,4 +30,28 @@ h6 {
   .container {
     flex-direction: column;
   }
+}
+
+.collection-card {
+  text-decoration: none;
+  color: inherit;
+}
+
+.collection-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-bottom: 15px;
+}
+
+.collection-card-title {
+  font-size: 1rem;
+  margin-bottom: 5px;
+  text-decoration: none;
+}
+
+.collection-card-price {
+  font-weight: bold;
+  font-size: 0.85rem;
+  text-decoration: none;
 }
