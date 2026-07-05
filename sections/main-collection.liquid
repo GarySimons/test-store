@@ -1,0 +1,67 @@
+{% stylesheet %}
+  .collection-page {
+    margin: 0 auto;
+    padding: 40px 20px;
+  }
+
+  .collection-title {
+    font-size: 1.5rem;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .collection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+
+  @media screen and (max-width: 768px) {
+    .collection-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .collection-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+<div class="collection-page container">
+  <h1 class="collection-title">
+    {{ collection.title }}
+  </h1>
+
+  <div class="collection-grid">
+    {% for product in collection.products %}
+      <a href="{{ product.url }}" class="collection-card">
+        {% if product.featured_image %}
+          {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+        {% endif %}
+
+        <h2 class="collection-card-title">
+          {{ product.title }}
+        </h2>
+
+        <div class="collection-card-price">
+          {{ product.price | money }}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Main Collection",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Main Collection",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

@@ -1,10 +1,4 @@
-{% comment %}
-  Shopify Basic Page Template
-  Save as: templates/page.custom.liquid
-  Then assign this template to a page in Shopify Admin.
-{% endcomment %}
-
-<style>
+{% stylesheet %}
   .custom-page {
     margin: 0 auto;
     padding: 40px 0;
@@ -45,7 +39,7 @@
   .button:hover {
     opacity: 0.85;
   }
-</style>
+{% endstylesheet %}
 
 <div class="container">
   <div class="custom-page">
@@ -62,3 +56,15 @@
     {% endif %}
   </div>
 </div>
+
+{% schema %}
+{
+  "name": "main Page",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Main Page"
+    }
+  ]
+}
+{% endschema %}
