@@ -80,18 +80,23 @@
   </div>
 
   <div class="product-details">
-    <h1 class="product-title">{{ product.title }}</h1>
-
-    <div class="product-price">{{ product.price | money }}</div>
-
-    <div class="product-description">
-      {{ product.description }}
-    </div>
-
-    {% form 'product', product %}
-      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-      <button class="add-to-cart">Add to Cart</button>
-    {% endform %}
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {% when 'title' %}
+          <h1 class="product-title">{{ product.title }}</h1>
+        {% when 'price' %}
+          <div class="product-price">{{ product.price | money }}</div>
+        {% when 'description' %}
+          <div class="product-description">
+            {{ product.description }}
+          </div>
+        {% when 'add-to-cart' %}
+          {% form 'product', product %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+            <button class="add-to-cart">Add to Cart</button>
+          {% endform %}
+      {% endcase %}
+    {% endfor %}
   </div>
 </div>
 
@@ -99,10 +104,44 @@
 {
   "name": "Main Product",
   "tag": "section",
-  "settings": [],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "title",
+      "name": "Title"
+    },
+    {
+      "type": "description",
+      "name": "Description"
+    },
+    {
+      "type": "price",
+      "name": "Price"
+    },
+    {
+      "type": "add-to-cart",
+      "name": "Add To cart Button"
+    }
+  ],
   "presets": [
     {
-      "name": "Main Product"
+      "name": "Main Product",
+      "blocks": [
+        {
+          "type": "title"
+        },
+        {
+          "type": "description"
+        },
+        {
+          "type": "price"
+        },
+        {
+          "type": "add-to-cart"
+        }
+      ]
     }
   ]
 }

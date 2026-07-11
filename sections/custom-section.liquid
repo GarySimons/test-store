@@ -1,0 +1,17 @@
+{% comment %}
+  add <section> as placeholder for content
+{% endcomment %}
+<section class="container">
+  {% content_for 'blocks' %}
+</section>
+
+{% schema %}
+{
+  "name": "Custom Section",
+  "blocks": [
+    {
+      "type": "@theme"
+    }
+  ]
+}
+{% endschema %}
