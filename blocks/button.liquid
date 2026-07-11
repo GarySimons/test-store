@@ -1,0 +1,67 @@
+<a
+  {% if block.settings.button_link != blank %}
+    href="{{ block.settings.button_link }}"
+  {% else %}
+    role="link"
+    aria-disabled="true"
+  {% endif %}
+  class="button-block"
+  style="
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+  "
+  {{ block.shopify_attributes }}
+>
+  {{ block.settings.button_text }}
+</a>
+
+<style>
+  .button-block {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 32px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+  }
+
+  .button-block:hover {
+    opacity: 0.85;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Button",
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background colour",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text colour",
+      "default": "#ffffff"
+    }
+  ]
+}
+{% endschema %}
