@@ -15,10 +15,14 @@
         "background_color": "#000000",
         "text_color": "#ffffff"
       }
-    }
+    },
+      "side-cart" : {
+        "type" : "sidebar"
+      }
   },
   "order": [
     "announcement_bar_fmxLEc",
-    "header"
+    "header",
+    "side-cart"
   ]
 }

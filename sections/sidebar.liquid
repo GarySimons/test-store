@@ -1,0 +1,90 @@
+<sidebar-drawer id="drawer">
+  <div class="drawer-overlay"></div>
+
+  <aside class="drawer">
+    <!-- Drawer content -->
+  </aside>
+</sidebar-drawer>
+
+<style>
+  sidebar-drawer {
+    display: block;
+  }
+
+  sidebar-drawer .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    z-index: 9998;
+  }
+
+  sidebar-drawer .drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: min(550px, 100vw);
+    height: 100dvh;
+    background: #fff;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 9999;
+    overflow-y: auto;
+    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+  }
+
+  sidebar-drawer[open] .drawer-overlay {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  sidebar-drawer[open] .drawer {
+    transform: translateX(0);
+  }
+</style>
+
+<script>
+  class SidebarDrawer extends HTMLElement {
+    connectedCallback() {
+      this.overlay = this.querySelector('.drawer-overlay');
+
+      this.overlay?.addEventListener('click', () => this.close());
+
+      document.addEventListener('keydown', this.handleKeydown);
+    }
+
+    disconnectedCallback() {
+      document.removeEventListener('keydown', this.handleKeydown);
+    }
+
+    handleKeydown = (event) => {
+      if (event.key === 'Escape') {
+        this.close();
+      }
+    };
+
+    open() {
+      this.setAttribute('open', '');
+      document.body.style.overflow = 'hidden';
+    }
+
+    close() {
+      this.removeAttribute('open');
+      document.body.style.overflow = '';
+    }
+
+    toggle() {
+      this.hasAttribute('open') ? this.close() : this.open();
+    }
+  }
+
+  customElements.define('sidebar-drawer', SidebarDrawer);
+</script>
+
+{% schema %}
+{
+  "name": "Sidebar"
+}
+{% endschema %}
