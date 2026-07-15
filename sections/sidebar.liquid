@@ -3,6 +3,12 @@
 
   <aside class="drawer">
     <!-- Drawer content -->
+    <h2>Your Cart</h2>
+    <div id="cart-item">
+      {% for item in cart.items %}
+        {% render 'side-cart-item', item: item, liquid: true %}
+      {% endfor %}
+    </div>
   </aside>
 </sidebar-drawer>
 
@@ -33,6 +39,7 @@
     z-index: 9999;
     overflow-y: auto;
     box-shadow: -10px 0 30px rgba(0, 0, 0, 0.15);
+    padding: 1rem;
   }
 
   sidebar-drawer[open] .drawer-overlay {
@@ -44,44 +51,6 @@
     transform: translateX(0);
   }
 </style>
-
-<script>
-  class SidebarDrawer extends HTMLElement {
-    connectedCallback() {
-      this.overlay = this.querySelector('.drawer-overlay');
-
-      this.overlay?.addEventListener('click', () => this.close());
-
-      document.addEventListener('keydown', this.handleKeydown);
-    }
-
-    disconnectedCallback() {
-      document.removeEventListener('keydown', this.handleKeydown);
-    }
-
-    handleKeydown = (event) => {
-      if (event.key === 'Escape') {
-        this.close();
-      }
-    };
-
-    open() {
-      this.setAttribute('open', '');
-      document.body.style.overflow = 'hidden';
-    }
-
-    close() {
-      this.removeAttribute('open');
-      document.body.style.overflow = '';
-    }
-
-    toggle() {
-      this.hasAttribute('open') ? this.close() : this.open();
-    }
-  }
-
-  customElements.define('sidebar-drawer', SidebarDrawer);
-</script>
 
 {% schema %}
 {

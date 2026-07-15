@@ -1,0 +1,119 @@
+{% liquid
+  if liquid
+    assign url = item.url
+    assign image_url = item.image | image_url: width: 90
+    assign title = item.product.title
+    if item.variant.title != 'Default Title'
+      assign variant_title = item.variant.title
+    endif
+    assign quantity = item.quantity
+    assign final_line_price = item.final_line_price | money
+    assign orginal_line_price = item.orginal_line_price | money
+  else
+    assign url = '$IMAGE_URL$'
+    assign image_url = item.image | image_url: width: 90
+    assign title = item.product.title
+    if item.variant.title != 'Default Title'
+      assign variant_title = item.variant.title
+    endif
+    assign quantity = item.quantity
+    assign final_line_price = item.final_line_price | money
+    assign orginal_line_price = item.orginal_line_price | money
+  endif
+%}
+
+<side-cart-item class="side-cart-item">
+  <a href="{{ url }}" class="side-cart-item__image">
+    <img
+      src="{{ image_url }}"
+      alt="{{ title }}"
+      width="90"
+      height="90"
+    >
+  </a>
+
+  <div class="side-cart-item__content">
+    <a href="{{ url }}" class="side-cart-item__title"> {{ title }}</a>
+    <p class="side-cart-item__variant">{{ variant_title }}</p>
+    <div class="side-cart-item__footer">
+      <span class="side-cart-item__quantity">{{ quantity }}</span>
+
+      <span class="side-cart-item__price">{{ final_line_price }}</span>
+    </div>
+
+    <a href="#" class="side-cart-item__remove"> Remove </a>
+  </div>
+</side-cart-item>
+
+<style>
+  .side-cart-item {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    gap: 1rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #ececec;
+  }
+
+  .side-cart-item__image img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+  }
+
+  .side-cart-item__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .side-cart-item__title {
+    color: #111;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .side-cart-item__variant {
+    margin: 0.35rem 0 1rem;
+    color: #777;
+    font-size: 0.875rem;
+  }
+
+  .side-cart-item__footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+
+  .side-cart-item__quantity {
+    color: #666;
+    font-size: 0.9rem;
+  }
+
+  .side-cart-item__price {
+    font-weight: 600;
+    color: #111;
+  }
+
+  .side-cart-item__remove {
+    margin-top: 0.75rem;
+
+    color: #888;
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s ease;
+  }
+
+  .side-cart-item__remove:hover {
+    color: #111;
+  }
+
+  @media (max-width: 480px) {
+    .side-cart-item {
+      grid-template-columns: 70px 1fr;
+    }
+  }
+</style>

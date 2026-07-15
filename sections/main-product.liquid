@@ -1,99 +1,119 @@
 {% stylesheet %}
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
   .product-container {
-    margin: auto;
+    max-width: 1200px;
+    margin: 45px auto 0;
     display: flex;
     gap: 40px;
-    margin: 45px auto 0 auto;
+    align-items: center;
   }
 
-  .product-image {
+  .product-image,
+  .product-details {
     flex: 1;
   }
 
   .product-image img {
     width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
   }
 
   .product-details {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: flex-start;
   }
 
   .product-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-bottom: 15px;
     color: #222;
   }
 
   .product-price {
-    font-size: 1rem;
+    font-size: 1.25rem;
+    font-weight: 700;
     margin-bottom: 20px;
-    font-weight: bold;
   }
 
   .product-description {
-    font-size: 0.85rem;
-    line-height: 1.6;
+    font-size: 0.95rem;
+    line-height: 1.7;
     color: #555;
-    margin-bottom: 30px;
   }
 
   .add-to-cart {
-    padding: 15px 25px;
-    font-size: 1rem;
-    border: none;
-    background-color: #000;
+    margin-top: 30px;
+    padding: 15px 30px;
+    background: #000;
     color: #fff;
-    cursor: pointer;
+    border: none;
     border-radius: 6px;
-    transition: background 0.3s ease;
-    width: fit-content;
-    margin: 30px 0 0 0;
+    cursor: pointer;
+    transition: background 0.25s ease;
   }
 
   .add-to-cart:hover {
-    background-color: #333;
+    background: #333;
   }
 
-  @media (max-width: 768px) {
+  .placeholder-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  @media screen and (max-width: 768px) {
     .product-container {
       flex-direction: column;
+      gap: 30px;
+    }
+
+    .product-title {
+      font-size: 1.6rem;
+    }
+
+    .product-details {
+      width: 100%;
     }
   }
 {% endstylesheet %}
 
 <div class="product-container container">
   <div class="product-image">
-    <img
-      src="{{ product.featured_image | image_url: width: 400 }}"
-      alt="Product Image"
-    >
+    {% if product.featured_image %}
+      {{ product.featured_image | image_url: width: 1200 | image_tag: alt: product.title, loading: 'lazy' }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {% endif %}
   </div>
 
   <div class="product-details">
     {% for block in section.blocks %}
       {% case block.type %}
         {% when 'title' %}
-          <h1 class="product-title">{{ product.title }}</h1>
+          <h1 class="product-title" {{ block.shopify_attributes }}>{{ product.title }}dddd</h1>
+
         {% when 'price' %}
-          <div class="product-price">{{ product.price | money }}</div>
+          <div class="product-price" {{ block.shopify_attributes }}>
+            {{ product.price | money }}
+          </div>
+
         {% when 'description' %}
-          <div class="product-description">
+          <div class="product-description" {{ block.shopify_attributes }}>
             {{ product.description }}
           </div>
+
         {% when 'add-to-cart' %}
           {% form 'product', product %}
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <button class="add-to-cart">Add to Cart</button>
+            <input
+              type="hidden"
+              name="id"
+              value="{{ product.selected_or_first_available_variant.id }}"
+            >
+
+            <button type="submit" class="add-to-cart">Add to Cart</button>
           {% endform %}
       {% endcase %}
     {% endfor %}
@@ -113,16 +133,16 @@
       "name": "Title"
     },
     {
-      "type": "description",
-      "name": "Description"
-    },
-    {
       "type": "price",
       "name": "Price"
     },
     {
+      "type": "description",
+      "name": "Description"
+    },
+    {
       "type": "add-to-cart",
-      "name": "Add To cart Button"
+      "name": "Add to Cart Button"
     }
   ],
   "presets": [
@@ -133,10 +153,10 @@
           "type": "title"
         },
         {
-          "type": "description"
+          "type": "price"
         },
         {
-          "type": "price"
+          "type": "description"
         },
         {
           "type": "add-to-cart"
